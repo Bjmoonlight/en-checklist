@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ENHYPEN Checklist 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #ffe6f7 0%, #ffd6e8 50%, #ffeaf5 100%);
+            min-height: 100vh;
+            color: #b3477a;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 10px;
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #ff9edb, #ff77c7);
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(255, 102, 194, 0.3);
+        }
+        .header h1 {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(255, 102, 194, 0.4);
+            margin-bottom: 5px;
+        }
+        .header p {
+            color: #ffe0f1;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .menu-item {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(255, 102, 194, 0.15);
+            border: 2px solid #ffb7d9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 102, 194, 0.25);
+            border-color: #ff77c7;
+        }
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 136, 191, 0.1), transparent);
+            transition: transform 0.5s;
+            transform: rotate(45deg) translateY(-100%);
+        }
+        .menu-item:hover::before {
+            transform: rotate(45deg) translateY(0%);
+        }
+        .menu-item-content {
+            position: relative;
+            z-index: 1;
+        }
+        .menu-item-title {
+            font-size: 1em;
+            font-weight: 700;
+            color: #b3477a;
+            margin-bottom: 8px;
+        }
+        .menu-item-count {
+            font-size: 0.85em;
+            color: #ff77c7;
+            font-weight: 600;
+        }
+        .progress-bar {
+            background: #ffd6e8;
+            height: 6px;
+            border-radius: 3px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff77c7, #ff4fa0);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .section-view {
+            display: none;
+        }
+        .section-header {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(255, 102, 194, 0.15);
+            text-align: center;
+        }
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 800;
+            color: #b3477a;
+            margin-bottom: 10px;
+        }
+        .section-progress {
+            font-size: 1em;
+            color: #ff77c7;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .back-button {
+            background: linear-gradient(135deg, #ff77c7, #ff4fa0);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 102, 194, 0.3);
+        }
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 102, 194, 0.4);
+        }
+        .episode-item {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(255, 102, 194, 0.1);
+            border: 2px solid #ffd1e5;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .episode-item:hover {
+            border-color: #ff77c7;
+            transform: translateX(5px);
+        }
+        .episode-item.completed {
+            background: linear-gradient(135deg, #ffeaf5, #ffd6e8);
+            border-color: #ff77c7;
+        }
+        .episode-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #ff77c7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .episode-checkbox.checked {
+            background: linear-gradient(135deg, #ff77c7, #ff4fa0);
+            border-color: #ff4fa0;
+        }
+        .episode-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .episode-info {
+            flex-grow: 1;
+        }
+        .episode-title {
+            font-size: 1em;
+            font-weight: 700;
+            color: #b3477a;
+            margin-bottom: 4px;
+        }
+        .episode-meta {
+            font-size: 0.85em;
+            color: #ff77c7;
+            font-weight: 600;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .action-button {
+            background: linear-gradient(135deg, #ff77c7, #ff4fa0);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 102, 194, 0.3);
+            flex: 1;
+            min-width: 120px;
+        }
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 102, 194, 0.4);
+        }
+        .action-button.secondary {
+            background: white;
+            color: #b3477a;
+            border: 2px solid #ff77c7;
+        }
+        .action-button.secondary:hover {
+            background: #ffeaf5;
+        }
+        .stats {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(255, 102, 194, 0.15);
+            text-align: center;
+        }
+        .stats-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #b3477a;
+            margin-bottom: 15px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .stat-item {
+            background: linear-gradient(135deg, #ffeaf5, #ffd6e8);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #ff77c7;
+        }
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #b3477a;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            color: #ff77c7;
+            font-weight: 600;
+        }
+        .floating-hearts {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .heart {
+            position: absolute;
+            color: #ff77c7;
+            font-size: 20px;
+            animation: floatUp 2s ease-out forwards;
+        }
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+        .hidden {
+            display: none !important;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 5px;
+            }
+            .menu-grid {
+                gap: 12px;
+            }
+            .menu-item {
+                padding: 15px 10px;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .action-button {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ ENHYPEN Checklist ✨</h1>
+            <p>Track your favorite content! 💖</p>
+        </div>
+
+        <div id="menu-view">
+            <div class="menu-grid" id="menu-grid">
+                <!-- Menu items here -->
+            </div>
+
+            <div class="stats">
+                <div class="stats-title">📊 Your Progress</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="total-watched">0</div>
+                        <div class="stat-label">Videos Watched</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="total-percentage">0%</div>
+                        <div class="stat-label">Complete</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="action-button" onclick="exportProgress()">📤 Export Progress</button>
+                <button class="action-button secondary" onclick="importProgress()">📥 Import Progress</button>
+            </div>
+        </div>
+
+        <div id="section-view" class="section-view">
+            <div class="section-header">
+                <button class="back-button" onclick="showMenu()">← Back to Menu</button>
+                <div class="section-title" id="section-title">Section Title</div>
+                <div class="section-progress" id="section-progress">0/0 watched</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="section-progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="action-button" onclick="markAllComplete()">✅ Mark All Complete</button>
+                <button class="action-button secondary" onclick="markAllIncomplete()">❌ Mark All Incomplete</button>
+            </div>
+
+            <div id="episodes-list"><!-- episodes --></div>
+        </div>
+    </div>
+
+    <div class="floating-hearts" id="floating-hearts"></div>
+
+    <input type="file" id="import-file" accept=".json" style="display:none" />
+
+    <script>
+      const contentData = {
+        "encore": { title: "EN-CORE", emoji: "🎀", episodesCount: 22 },
+        "enoclock": { title: "EN-O'CLOCK", emoji: "⏰", episodesCount: 114 },
+        "note": { title: "NOTE", emoji: "📓", episodesCount: 183 },
+        "dancejamlive": { title: "DANCE JAM LIVE", emoji: "💃", episodesCount: 23 },
+        "enhypenepisode": { title: "ENHYPEN EPISODE", emoji: "🎬", episodesCount: 113 },
+        "enhypenhi": { title: "ENHYPEN&HI", emoji: "💖", episodesCount: 4 },
+        "enterkey": { title: "EN-TER KEY", emoji: "🔑", episodesCount: 187 },
+        "enhypenhiseason2": { title: "ENHYPEN&HI SEASON 2", emoji: "🎉", episodesCount: 6 },
+        "jayfashion": { title: "JAY FASHION", emoji: "👗", episodesCount: 4 },
+        "enlog": { title: "EN LOG", emoji: "📔", episodesCount: 57 },
+        "dimensiondilemma": { title: "DIMENSION: DILEMMA", emoji: "🔀", episodesCount: 42 },
+        "liveclips": { title: "LIVE CLIPS", emoji: "📉", episodesCount: 20 },
+        "enclips": { title: "EN-CLIPS", emoji: "🎞️", episodesCount: 22 },
+        "dimensionanswer": { title: "DIMENSION: ANSWER", emoji: "🔮", episodesCount: 36 },
+        "enco": { title: "EN-CO", emoji: "🍿", episodesCount: 6 },
+        "miniawards2022": { title: "MINI AWARDS 2022", emoji: "🏆", episodesCount: 4 },
+        "miniawards2023": { title: "MINI AWARDS 2023", emoji: "🏅", episodesCount: 4 },
+        "manifestoday1": { title: "MANIFESTO: DAY 1", emoji: "📜", episodesCount: 21 },
+        "enhypencoway": { title: "ENHYPEN WITH COWAY", emoji: "🤝", episodesCount: 2 },
+        "sosofun": { title: "SO SO FUN", emoji: "🎉", episodesCount: 8 },
+        "enclip": { title: "EN CLIP", emoji: "🎥", episodesCount: 72 },
+        "enniversary": { title: "ENNIVERSARY", emoji: "🎊", episodesCount: 19 },
+        "endrama": { title: "EN DRAMA", emoji: "🎭", episodesCount: 13 },
+        "romanceuntold": { title: "ROMANCE: UNTOLD", emoji: "❤️", episodesCount: 27 },
+        "orangeblood": { title: "ORANGE BLOOD", emoji: "🧡", episodesCount: 22 },
+        "darkblood": { title: "DARK BLOOD", emoji: "🖤", episodesCount: 20 },
+        "romanceuntolddaydream": { title: "ROMANCE UNTOLD DAYDREAM", emoji: "💭", episodesCount: 17 },
+        "desireunleash": { title: "DESIRE: UNLEASH", emoji: "🔥", episodesCount: 32 }
+      
+      };
+  
+
+        // Function to generate episodes array with generic titles
+        function generateEpisodes(count) {
+            let eps = [];
+            for(let i=1; i<=count; i++) {
+                eps.push({
+                    id: i,
+                    title: `Episodio ${i}`,
+                });
+            }
+            return eps;
+        }
+
+        // Prepare the full contentData with episodes arrays
+        for (const key in contentData) {
+            const count = contentData[key].episodesCount;
+            contentData[key].episodes = generateEpisodes(count);
+            delete contentData[key].episodesCount;
+        }
+
+        // Load watched status from localStorage
+        let watchedStatus = JSON.parse(localStorage.getItem('enhypenWatchedStatus') || '{}');
+        let currentSection = '';
+
+        function saveProgress() {
+            localStorage.setItem('enhypenWatchedStatus', JSON.stringify(watchedStatus));
+        }
+
+        function generateMenuItems() {
+            const menuGrid = document.getElementById('menu-grid');
+            menuGrid.innerHTML = '';
+
+            Object.keys(contentData).forEach(key => {
+                const section = contentData[key];
+                const watched = getWatchedCount(key);
+                const total = section.episodes.length;
+                const percentage = total > 0 ? Math.round((watched / total) * 100) : 0;
+
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.onclick = () => showSection(key);
+
+                menuItem.innerHTML = `
+                    <div class="menu-item-content">
+                        <div class="menu-item-title">${section.emoji} ${section.title}</div>
+                        <div class="menu-item-count">${watched}/${total} vistos</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+
+                menuGrid.appendChild(menuItem);
+            });
+
+            updateOverallStats();
+        }
+
+        function getWatchedCount(sectionKey) {
+            if (!watchedStatus[sectionKey]) return 0;
+            return Object.values(watchedStatus[sectionKey]).filter(Boolean).length;
+        }
+
+        function updateOverallStats() {
+            let totalWatched = 0;
+            let totalEpisodes = 0;
+
+            Object.keys(contentData).forEach(key => {
+                totalWatched += getWatchedCount(key);
+                totalEpisodes += contentData[key].episodes.length;
+            });
+
+            const percentage = totalEpisodes > 0 ? Math.round((totalWatched / totalEpisodes) * 100) : 0;
+
+            document.getElementById('total-watched').textContent = totalWatched;
+            document.getElementById('total-percentage').textContent = percentage + '%';
+        }
+
+        function showSection(sectionKey) {
+            currentSection = sectionKey;
+            const section = contentData[sectionKey];
+
+            document.getElementById('menu-view').style.display = 'none';
+            document.getElementById('section-view').style.display = 'block';
+
+            document.getElementById('section-title').textContent = `${section.emoji} ${section.title}`;
+
+            updateSectionProgress();
+            generateEpisodesList(sectionKey);
+        }
+        function generateEpisodesList(sectionKey) {
+      const episodesList = document.getElementById('episodes-list');
+      episodesList.innerHTML = '';
+      const section = contentData[sectionKey];
+      section.episodes.forEach(episode => {
+        const isWatched = watchedStatus[sectionKey] && watchedStatus[sectionKey][episode.id];
+        const rating = getRating(sectionKey, episode.id);
+        const episodeItem = document.createElement('div');
+        episodeItem.className = `episode-item ${isWatched ? 'completed' : ''}`;
+        episodeItem.innerHTML = `
+          <div class="episode-checkbox ${isWatched ? 'checked' : ''}" onclick="toggleEpisode(event, '${sectionKey}', ${episode.id})"></div>
+          <div class="episode-info">
+            <div class="episode-title">${episode.title}</div>
+            <div class="rating-stars" data-episode="${episode.id}" data-section="${sectionKey}">
+              ${[1,2,3,4,5].map(star => `<span class="star${rating >= star ? ' selected' : ''}" data-value="${star}">★</span>`).join('')}
+            </div>
+          </div>
+        `;
+        episodesList.appendChild(episodeItem);
+      });
+      document.querySelectorAll('.rating-stars').forEach(starContainer => {
+        starContainer.querySelectorAll('.star').forEach(star => {
+          star.addEventListener('click', e => {
+            const value = parseInt(e.target.getAttribute('data-value'));
+            const section = e.target.parentElement.getAttribute('data-section');
+            const episode = e.target.parentElement.getAttribute('data-episode');
+            saveRating(section, episode, value);
+            generateEpisodesList(section);
+          });
+        });
+      });
+    }
+    function saveRating(sectionKey, episodeId, value) {
+      const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
+      if (!ratings[sectionKey]) ratings[sectionKey] = {};
+      ratings[sectionKey][episodeId] = value;
+      localStorage.setItem('enhypenRatings', JSON.stringify(ratings));
+    }
+
+    function getRating(sectionKey, episodeId) {
+      const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
+      return ratings[sectionKey] && ratings[sectionKey][episodeId] || 0;
+    }
+
+        function toggleEpisode(event, sectionKey, episodeId) {
+            event.stopPropagation();
+            if (!watchedStatus[sectionKey]) {
+                watchedStatus[sectionKey] = {};
+            }
+
+            watchedStatus[sectionKey][episodeId] = !watchedStatus[sectionKey][episodeId];
+
+            if (watchedStatus[sectionKey][episodeId]) {
+                createHearts(event.target);
+            }
+
+            saveProgress();
+            generateEpisodesList(sectionKey);
+            updateSectionProgress();
+        }
+
+        function updateSectionProgress() {
+            const watched = getWatchedCount(currentSection);
+            const total = contentData[currentSection].episodes.length;
+            const percentage = total > 0 ? Math.round((watched / total) * 100) : 0;
+
+            document.getElementById('section-progress').textContent = `${watched}/${total} vistos`;
+            document.getElementById('section-progress-fill').style.width = percentage + '%';
+        }
+
+        function createHearts(element) {
+            const hearts = ['💖', '💗', '✨', '💕', '🌸'];
+            const container = document.getElementById('floating-hearts');
+
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+                const rect = element.getBoundingClientRect();
+                heart.style.left = (rect.left + Math.random() * 50) + 'px';
+                heart.style.top = (rect.top + Math.random() * 50) + 'px';
+
+                container.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+            }
+        }
+        // Mostrar el menú al cargar
+        function showMenu() {
+            document.getElementById('section-view').style.display = 'none';
+            document.getElementById('menu-view').style.display = 'block';
+            generateMenuItems();
+        }
+
+        function markAllComplete() {
+            if (!watchedStatus[currentSection]) {
+                watchedStatus[currentSection] = {};
+            }
+
+            contentData[currentSection].episodes.forEach(episode => {
+                watchedStatus[currentSection][episode.id] = true;
+            });
+
+            saveProgress();
+            generateEpisodesList(currentSection);
+            updateSectionProgress();
+        }
+
+        function markAllIncomplete() {
+            if (!watchedStatus[currentSection]) {
+                watchedStatus[currentSection] = {};
+            }
+
+            contentData[currentSection].episodes.forEach(episode => {
+                watchedStatus[currentSection][episode.id] = false;
+            });
+
+            saveProgress();
+            generateEpisodesList(currentSection);
+            updateSectionProgress();
+        }
+
+        function exportProgress() {
+            const dataStr = JSON.stringify(watchedStatus, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'enhypen-progress.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importProgress() {
+            document.getElementById('import-file').click();
+        }
+
+        document.getElementById('import-file').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const imported = JSON.parse(e.target.result);
+                        watchedStatus = imported;
+                        saveProgress();
+                        generateMenuItems();
+                        alert('✨ ¡Progreso importado con éxito!');
+                    } catch (error) {
+                        alert('❌ Error al importar el archivo. Verifica el formato.');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Inicializar app
+        generateMenuItems();
+
+        // Animación al cargar
+        setTimeout(() => {
+            document.querySelectorAll('.menu-item').forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.animation = 'fadeInUp 0.5s ease forwards';
+                }, index * 100);
+            });
+        }, 100);
+    </script>
+</body>
+</html>
