@@ -473,7 +473,7 @@
                 menuItem.innerHTML = `
                     <div class="menu-item-content">
                         <div class="menu-item-title">${section.emoji} ${section.title}</div>
-                        <div class="menu-item-count">${watched}/${total} seen </div>
+                        <div class="menu-item-count">${watched}/${total} watched </div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: ${percentage}%"></div>
                         </div>
@@ -639,7 +639,7 @@
             const total = contentData[currentSection].episodes.length;
             const percentage = total > 0 ? Math.round((watched / total) * 100) : 0;
 
-            document.getElementById('section-progress').textContent = `${watched}/${total} seen`;
+            document.getElementById('section-progress').textContent = `${watched}/${total} watched`;
             document.getElementById('section-progress-fill').style.width = percentage + '%';
         }
 
