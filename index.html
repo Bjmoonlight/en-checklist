@@ -196,13 +196,41 @@
             font-size: 1em;
             font-weight: 700;
             color: #b3477a;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
         .episode-meta {
             font-size: 0.85em;
             color: #ff77c7;
             font-weight: 600;
         }
+        
+        /* Estilos para las estrellas - ESTA ES LA PARTE QUE FALTABA */
+        .rating-stars {
+            display: flex;
+            gap: 3px;
+            margin-top: 5px;
+        }
+        .star {
+            color: #ddd;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            user-select: none;
+        }
+        .star:hover {
+            color: #ffd700;
+        }
+        .star.selected {
+            color: #ffd700;
+        }
+        .rating-stars:hover .star {
+            color: #ddd;
+        }
+        .rating-stars:hover .star:hover,
+        .rating-stars:hover .star:hover ~ .star {
+            color: #ffd700;
+        }
+        
         .actions {
             display: flex;
             gap: 10px;
@@ -399,9 +427,7 @@
         "darkblood": { title: "DARK BLOOD", emoji: "🖤", episodesCount: 20 },
         "romanceuntolddaydream": { title: "ROMANCE UNTOLD DAYDREAM", emoji: "💭", episodesCount: 17 },
         "desireunleash": { title: "DESIRE: UNLEASH", emoji: "🔥", episodesCount: 32 }
-      
       };
-  
 
         // Function to generate episodes array with generic titles
         function generateEpisodes(count) {
@@ -492,49 +518,104 @@
             updateSectionProgress();
             generateEpisodesList(sectionKey);
         }
-        function generateEpisodesList(sectionKey) {
-      const episodesList = document.getElementById('episodes-list');
-      episodesList.innerHTML = '';
-      const section = contentData[sectionKey];
-      section.episodes.forEach(episode => {
-        const isWatched = watchedStatus[sectionKey] && watchedStatus[sectionKey][episode.id];
-        const rating = getRating(sectionKey, episode.id);
-        const episodeItem = document.createElement('div');
-        episodeItem.className = `episode-item ${isWatched ? 'completed' : ''}`;
-        episodeItem.innerHTML = `
-          <div class="episode-checkbox ${isWatched ? 'checked' : ''}" onclick="toggleEpisode(event, '${sectionKey}', ${episode.id})"></div>
-          <div class="episode-info">
-            <div class="episode-title">${episode.title}</div>
-            <div class="rating-stars" data-episode="${episode.id}" data-section="${sectionKey}">
-              ${[1,2,3,4,5].map(star => `<span class="star${rating >= star ? ' selected' : ''}" data-value="${star}">★</span>`).join('')}
-            </div>
-          </div>
-        `;
-        episodesList.appendChild(episodeItem);
-      });
-      document.querySelectorAll('.rating-stars').forEach(starContainer => {
-        starContainer.querySelectorAll('.star').forEach(star => {
-          star.addEventListener('click', e => {
-            const value = parseInt(e.target.getAttribute('data-value'));
-            const section = e.target.parentElement.getAttribute('data-section');
-            const episode = e.target.parentElement.getAttribute('data-episode');
-            saveRating(section, episode, value);
-            generateEpisodesList(section);
-          });
-        });
-      });
-    }
-    function saveRating(sectionKey, episodeId, value) {
-      const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
-      if (!ratings[sectionKey]) ratings[sectionKey] = {};
-      ratings[sectionKey][episodeId] = value;
-      localStorage.setItem('enhypenRatings', JSON.stringify(ratings));
-    }
 
-    function getRating(sectionKey, episodeId) {
-      const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
-      return ratings[sectionKey] && ratings[sectionKey][episodeId] || 0;
-    }
+        function generateEpisodesList(sectionKey) {
+            const episodesList = document.getElementById('episodes-list');
+            episodesList.innerHTML = '';
+            const section = contentData[sectionKey];
+
+            section.episodes.forEach(episode => {
+                const isWatched = watchedStatus[sectionKey] && watchedStatus[sectionKey][episode.id];
+                const rating = getRating(sectionKey, episode.id);
+
+                const episodeItem = document.createElement('div');
+                episodeItem.className = `episode-item ${isWatched ? 'completed' : ''}`;
+
+                const checkbox = document.createElement('div');
+                checkbox.className = `episode-checkbox ${isWatched ? 'checked' : ''}`;
+                checkbox.addEventListener('click', event => toggleEpisode(event, sectionKey, episode.id));
+
+                const info = document.createElement('div');
+                info.className = 'episode-info';
+
+                const title = document.createElement('div');
+                title.className = 'episode-title';
+                title.textContent = episode.title;
+
+                const starsContainer = document.createElement('div');
+                starsContainer.className = 'rating-stars';
+
+                // Mejorar la creación de estrellas
+                for (let i = 1; i <= 5; i++) {
+                    const star = document.createElement('span');
+                    star.className = `star ${rating >= i ? 'selected' : ''}`;
+                    star.dataset.value = i;
+                    star.textContent = '★';
+
+                    star.addEventListener('click', e => {
+                        e.stopPropagation();
+                        const value = parseInt(star.dataset.value);
+                        saveRating(sectionKey, episode.id, value);
+                        
+                        // Actualizar visualmente las estrellas de este episodio
+                        const allStars = starsContainer.querySelectorAll('.star');
+                        allStars.forEach((s, index) => {
+                            if (index < value) {
+                                s.classList.add('selected');
+                            } else {
+                                s.classList.remove('selected');
+                            }
+                        });
+                    });
+
+                    // Agregar efecto hover
+                    star.addEventListener('mouseenter', () => {
+                        const allStars = starsContainer.querySelectorAll('.star');
+                        allStars.forEach((s, index) => {
+                            if (index < i) {
+                                s.style.color = '#ffd700';
+                            } else {
+                                s.style.color = '#ddd';
+                            }
+                        });
+                    });
+
+                    starsContainer.appendChild(star);
+                }
+
+                // Restaurar colores originales al salir del hover
+                starsContainer.addEventListener('mouseleave', () => {
+                    const allStars = starsContainer.querySelectorAll('.star');
+                    allStars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.style.color = '#ffd700';
+                        } else {
+                            s.style.color = '#ddd';
+                        }
+                    });
+                });
+
+                info.appendChild(title);
+                info.appendChild(starsContainer);
+
+                episodeItem.appendChild(checkbox);
+                episodeItem.appendChild(info);
+
+                episodesList.appendChild(episodeItem);
+            });
+        }
+
+        function saveRating(sectionKey, episodeId, value) {
+            const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
+            if (!ratings[sectionKey]) ratings[sectionKey] = {};
+            ratings[sectionKey][episodeId] = value;
+            localStorage.setItem('enhypenRatings', JSON.stringify(ratings));
+        }
+
+        function getRating(sectionKey, episodeId) {
+            const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
+            return ratings[sectionKey] && ratings[sectionKey][episodeId] || 0;
+        }
 
         function toggleEpisode(event, sectionKey, episodeId) {
             event.stopPropagation();
@@ -582,7 +663,7 @@
                 }, 2000);
             }
         }
-        // Mostrar el menú al cargar
+
         function showMenu() {
             document.getElementById('section-view').style.display = 'none';
             document.getElementById('menu-view').style.display = 'block';
