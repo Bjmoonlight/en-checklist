@@ -157,7 +157,7 @@
             align-items: center;
             gap: 15px;
             transition: all 0.3s ease;
-            cursor: pointer;
+            /* Eliminado cursor: pointer; para evitar interferencia con las estrellas */
         }
         .episode-item:hover {
             border-color: #ff77c7;
@@ -204,7 +204,7 @@
             font-weight: 600;
         }
         
-        /* Estilos para las estrellas - ESTA ES LA PARTE QUE FALTABA */
+        /* Estilos para las estrellas - CORREGIDO */
         .rating-stars {
             display: flex;
             gap: 3px;
@@ -217,17 +217,7 @@
             transition: color 0.2s ease;
             user-select: none;
         }
-        .star:hover {
-            color: #ffd700;
-        }
         .star.selected {
-            color: #ffd700;
-        }
-        .rating-stars:hover .star {
-            color: #ddd;
-        }
-        .rating-stars:hover .star:hover,
-        .rating-stars:hover .star:hover ~ .star {
             color: #ffd700;
         }
         
@@ -351,8 +341,7 @@
 
         <div id="menu-view">
             <div class="menu-grid" id="menu-grid">
-                <!-- Menu items here -->
-            </div>
+                </div>
 
             <div class="stats">
                 <div class="stats-title">📊 Your Progress</div>
@@ -389,7 +378,7 @@
                 <button class="action-button secondary" onclick="markAllIncomplete()">❌ Mark All Incomplete</button>
             </div>
 
-            <div id="episodes-list"><!-- episodes --></div>
+            <div id="episodes-list"></div>
         </div>
     </div>
 
@@ -398,36 +387,36 @@
     <input type="file" id="import-file" accept=".json" style="display:none" />
 
     <script>
-      const contentData = {
-        "encore": { title: "EN-CORE", emoji: "🎀", episodesCount: 22 },
-        "enoclock": { title: "EN-O'CLOCK", emoji: "⏰", episodesCount: 114 },
-        "note": { title: "NOTE", emoji: "📓", episodesCount: 183 },
-        "dancejamlive": { title: "DANCE JAM LIVE", emoji: "💃", episodesCount: 23 },
-        "enhypenepisode": { title: "ENHYPEN EPISODE", emoji: "🎬", episodesCount: 113 },
-        "enhypenhi": { title: "ENHYPEN&HI", emoji: "💖", episodesCount: 4 },
-        "enterkey": { title: "EN-TER KEY", emoji: "🔑", episodesCount: 187 },
-        "enhypenhiseason2": { title: "ENHYPEN&HI SEASON 2", emoji: "🎉", episodesCount: 6 },
-        "jayfashion": { title: "JAY FASHION", emoji: "👗", episodesCount: 4 },
-        "enlog": { title: "EN LOG", emoji: "📔", episodesCount: 57 },
-        "dimensiondilemma": { title: "DIMENSION: DILEMMA", emoji: "🔀", episodesCount: 42 },
-        "liveclips": { title: "LIVE CLIPS", emoji: "📉", episodesCount: 20 },
-        "enclips": { title: "EN-CLIPS", emoji: "🎞️", episodesCount: 22 },
-        "dimensionanswer": { title: "DIMENSION: ANSWER", emoji: "🔮", episodesCount: 36 },
-        "enco": { title: "EN-CO", emoji: "🍿", episodesCount: 6 },
-        "miniawards2022": { title: "MINI AWARDS 2022", emoji: "🏆", episodesCount: 4 },
-        "miniawards2023": { title: "MINI AWARDS 2023", emoji: "🏅", episodesCount: 4 },
-        "manifestoday1": { title: "MANIFESTO: DAY 1", emoji: "📜", episodesCount: 21 },
-        "enhypencoway": { title: "ENHYPEN WITH COWAY", emoji: "🤝", episodesCount: 2 },
-        "sosofun": { title: "SO SO FUN", emoji: "🎉", episodesCount: 8 },
-        "enclip": { title: "EN CLIP", emoji: "🎥", episodesCount: 72 },
-        "enniversary": { title: "ENNIVERSARY", emoji: "🎊", episodesCount: 19 },
-        "endrama": { title: "EN DRAMA", emoji: "🎭", episodesCount: 13 },
-        "romanceuntold": { title: "ROMANCE: UNTOLD", emoji: "❤️", episodesCount: 27 },
-        "orangeblood": { title: "ORANGE BLOOD", emoji: "🧡", episodesCount: 22 },
-        "darkblood": { title: "DARK BLOOD", emoji: "🖤", episodesCount: 20 },
-        "romanceuntolddaydream": { title: "ROMANCE UNTOLD DAYDREAM", emoji: "💭", episodesCount: 17 },
-        "desireunleash": { title: "DESIRE: UNLEASH", emoji: "🔥", episodesCount: 32 }
-      };
+        const contentData = {
+            "encore": { title: "EN-CORE", emoji: "🎀", episodesCount: 22 },
+            "enoclock": { title: "EN-O'CLOCK", emoji: "⏰", episodesCount: 114 },
+            "note": { title: "NOTE", emoji: "📓", episodesCount: 183 },
+            "dancejamlive": { title: "DANCE JAM LIVE", emoji: "💃", episodesCount: 23 },
+            "enhypenepisode": { title: "ENHYPEN EPISODE", emoji: "🎬", episodesCount: 113 },
+            "enhypenhi": { title: "ENHYPEN&HI", emoji: "💖", episodesCount: 4 },
+            "enterkey": { title: "EN-TER KEY", emoji: "🔑", episodesCount: 187 },
+            "enhypenhiseason2": { title: "ENHYPEN&HI SEASON 2", emoji: "🎉", episodesCount: 6 },
+            "jayfashion": { title: "JAY FASHION", emoji: "👗", episodesCount: 4 },
+            "enlog": { title: "EN LOG", emoji: "📔", episodesCount: 57 },
+            "dimensiondilemma": { title: "DIMENSION: DILEMMA", emoji: "🔀", episodesCount: 42 },
+            "liveclips": { title: "LIVE CLIPS", emoji: "📉", episodesCount: 20 },
+            "enclips": { title: "EN-CLIPS", emoji: "🎞️", episodesCount: 22 },
+            "dimensionanswer": { title: "DIMENSION: ANSWER", emoji: "🔮", episodesCount: 36 },
+            "enco": { title: "EN-CO", emoji: "🍿", episodesCount: 6 },
+            "miniawards2022": { title: "MINI AWARDS 2022", emoji: "🏆", episodesCount: 4 },
+            "miniawards2023": { title: "MINI AWARDS 2023", emoji: "🏅", episodesCount: 4 },
+            "manifestoday1": { title: "MANIFESTO: DAY 1", emoji: "📜", episodesCount: 21 },
+            "enhypencoway": { title: "ENHYPEN WITH COWAY", emoji: "🤝", episodesCount: 2 },
+            "sosofun": { title: "SO SO FUN", emoji: "🎉", episodesCount: 8 },
+            "enclip": { title: "EN CLIP", emoji: "🎥", episodesCount: 72 },
+            "enniversary": { title: "ENNIVERSARY", emoji: "🎊", episodesCount: 19 },
+            "endrama": { title: "EN DRAMA", emoji: "🎭", episodesCount: 13 },
+            "romanceuntold": { title: "ROMANCE: UNTOLD", emoji: "❤️", episodesCount: 27 },
+            "orangeblood": { title: "ORANGE BLOOD", emoji: "🧡", episodesCount: 22 },
+            "darkblood": { title: "DARK BLOOD", emoji: "🖤", episodesCount: 20 },
+            "romanceuntolddaydream": { title: "ROMANCE UNTOLD DAYDREAM", emoji: "💭", episodesCount: 17 },
+            "desireunleash": { title: "DESIRE: UNLEASH", emoji: "🔥", episodesCount: 32 }
+        };
 
         // Function to generate episodes array with generic titles
         function generateEpisodes(count) {
@@ -454,6 +443,19 @@
 
         function saveProgress() {
             localStorage.setItem('enhypenWatchedStatus', JSON.stringify(watchedStatus));
+        }
+
+        // Funciones para guardar y obtener ratings
+        function saveRating(sectionKey, episodeId, value) {
+            let ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
+            if (!ratings[sectionKey]) ratings[sectionKey] = {};
+            ratings[sectionKey][episodeId] = value;
+            localStorage.setItem('enhypenRatings', JSON.stringify(ratings));
+        }
+
+        function getRating(sectionKey, episodeId) {
+            const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
+            return ratings[sectionKey] && ratings[sectionKey][episodeId] || 0;
         }
 
         function generateMenuItems() {
@@ -526,7 +528,7 @@
 
             section.episodes.forEach(episode => {
                 const isWatched = watchedStatus[sectionKey] && watchedStatus[sectionKey][episode.id];
-                const rating = getRating(sectionKey, episode.id);
+                let currentRating = getRating(sectionKey, episode.id); // Obtener la calificación guardada
 
                 const episodeItem = document.createElement('div');
                 episodeItem.className = `episode-item ${isWatched ? 'completed' : ''}`;
@@ -545,55 +547,45 @@
                 const starsContainer = document.createElement('div');
                 starsContainer.className = 'rating-stars';
 
-                // Mejorar la creación de estrellas
-                for (let i = 1; i <= 5; i++) {
-                    const star = document.createElement('span');
-                    star.className = `star ${rating >= i ? 'selected' : ''}`;
-                    star.dataset.value = i;
-                    star.textContent = '★';
+                // Función para renderizar las estrellas
+                const renderStars = (ratingValue) => {
+                    starsContainer.innerHTML = ''; // Limpiar estrellas existentes
+                    for (let i = 1; i <= 5; i++) {
+                        const star = document.createElement('span');
+                        star.className = `star ${ratingValue >= i ? 'selected' : ''}`;
+                        star.dataset.value = i;
+                        star.textContent = '★';
 
-                    star.addEventListener('click', e => {
-                        e.stopPropagation();
-                        const value = parseInt(star.dataset.value);
-                        saveRating(sectionKey, episode.id, value);
+                        star.addEventListener('click', (e) => {
+                            e.stopPropagation(); // Evitar que el clic en la estrella afecte al checkbox del episodio
+                            const clickedValue = parseInt(star.dataset.value);
+                            saveRating(sectionKey, episode.id, clickedValue);
+                            currentRating = clickedValue; // Actualizar la calificación actual
+                            renderStars(currentRating); // Volver a renderizar para asegurar que el estado sea el correcto
+                        });
+
+                        star.addEventListener('mouseenter', () => {
+                            // Al pasar el mouse, mostrar el estado de "pre-selección"
+                            const hoverValue = parseInt(star.dataset.value);
+                            starsContainer.querySelectorAll('.star').forEach((s, idx) => {
+                                if (idx < hoverValue) {
+                                    s.classList.add('selected');
+                                } else {
+                                    s.classList.remove('selected');
+                                }
+                            });
+                        });
                         
-                        // Actualizar visualmente las estrellas de este episodio
-                        const allStars = starsContainer.querySelectorAll('.star');
-                        allStars.forEach((s, index) => {
-                            if (index < value) {
-                                s.classList.add('selected');
-                            } else {
-                                s.classList.remove('selected');
-                            }
-                        });
-                    });
+                        starsContainer.appendChild(star);
+                    }
+                };
 
-                    // Agregar efecto hover
-                    star.addEventListener('mouseenter', () => {
-                        const allStars = starsContainer.querySelectorAll('.star');
-                        allStars.forEach((s, index) => {
-                            if (index < i) {
-                                s.style.color = '#ffd700';
-                            } else {
-                                s.style.color = '#ddd';
-                            }
-                        });
-                    });
-
-                    starsContainer.appendChild(star);
-                }
-
-                // Restaurar colores originales al salir del hover
+                // Al salir del contenedor de estrellas, restaurar la calificación guardada
                 starsContainer.addEventListener('mouseleave', () => {
-                    const allStars = starsContainer.querySelectorAll('.star');
-                    allStars.forEach((s, index) => {
-                        if (index < rating) {
-                            s.style.color = '#ffd700';
-                        } else {
-                            s.style.color = '#ddd';
-                        }
-                    });
+                    renderStars(currentRating);
                 });
+
+                renderStars(currentRating); // Renderizar las estrellas inicialmente con la calificación guardada
 
                 info.appendChild(title);
                 info.appendChild(starsContainer);
@@ -603,18 +595,6 @@
 
                 episodesList.appendChild(episodeItem);
             });
-        }
-
-        function saveRating(sectionKey, episodeId, value) {
-            const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
-            if (!ratings[sectionKey]) ratings[sectionKey] = {};
-            ratings[sectionKey][episodeId] = value;
-            localStorage.setItem('enhypenRatings', JSON.stringify(ratings));
-        }
-
-        function getRating(sectionKey, episodeId) {
-            const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
-            return ratings[sectionKey] && ratings[sectionKey][episodeId] || 0;
         }
 
         function toggleEpisode(event, sectionKey, episodeId) {
@@ -630,7 +610,10 @@
             }
 
             saveProgress();
-            generateEpisodesList(sectionKey);
+            // Solo actualizamos la lista si es la sección actual, para evitar re-renderizados innecesarios
+            if (currentSection === sectionKey) {
+                generateEpisodesList(sectionKey);
+            }
             updateSectionProgress();
         }
 
@@ -699,7 +682,12 @@
         }
 
         function exportProgress() {
-            const dataStr = JSON.stringify(watchedStatus, null, 2);
+            const ratings = JSON.parse(localStorage.getItem('enhypenRatings') || '{}');
+            const exportData = {
+                watched: watchedStatus,
+                ratings: ratings
+            };
+            const dataStr = JSON.stringify(exportData, null, 2);
             const dataBlob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
@@ -720,12 +708,24 @@
                 reader.onload = function(e) {
                     try {
                         const imported = JSON.parse(e.target.result);
-                        watchedStatus = imported;
+                        
+                        // Manejar formato anterior y nuevo
+                        if (imported.watched && imported.ratings) {
+                            watchedStatus = imported.watched;
+                            localStorage.setItem('enhypenRatings', JSON.stringify(imported.ratings));
+                        } else {
+                            // Asume que si no hay 'watched' ni 'ratings' es el formato antiguo solo de watched
+                            watchedStatus = imported;
+                            // Si se importa un archivo antiguo sin ratings, asegúrate de que ratings esté vacío
+                            localStorage.setItem('enhypenRatings', '{}');
+                        }
+                        
                         saveProgress();
                         generateMenuItems();
                         alert('✨ ¡Progreso importado con éxito!');
                     } catch (error) {
                         alert('❌ Error al importar el archivo. Verifica el formato.');
+                        console.error('Error importing file:', error);
                     }
                 };
                 reader.readAsText(file);
